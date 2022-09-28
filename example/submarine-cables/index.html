@@ -1,56 +1,60 @@
 <head>
-  <style> body { margin: 0; } </style>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
 
   <script src="//unpkg.com/react/umd/react.production.min.js"></script>
   <script src="//unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
   <script src="//unpkg.com/babel-standalone"></script>
 
-  <script src="//unpkg.com/react-globe.gl"></script>
-  <!--<script src="../../dist/react-globe.gl.js"></script>-->
+  <script src="//unpkg.com/react-globe.gl-fork-fork"></script>
+  <!--<script src="../../dist/react-globe.gl-fork-fork.js"></script>-->
 </head>
 
 <body>
-<div id="globeViz"></div>
+  <div id="globeViz"></div>
 
-<script type="text/jsx">
-  const { useState, useEffect } = React;
+  <script type="text/jsx">
+    const { useState, useEffect } = React;
 
-  const World = () => {
-    const [cablePaths, setCablePaths] = useState([]);
+    const World = () => {
+      const [cablePaths, setCablePaths] = useState([]);
 
-    useEffect(() => {
-      // from https://github.com/telegeography/www.submarinecablemap.com
-      fetch('//raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/web/public/api/v3/cable/cable-geo.json')
-        .then(r =>r.json())
-        .then(cablesGeo => {
-          let cablePaths = [];
-          cablesGeo.features.forEach(({ geometry, properties }) => {
-            geometry.coordinates.forEach(coords => cablePaths.push({ coords, properties }));
+      useEffect(() => {
+        // from https://github.com/telegeography/www.submarinecablemap.com
+        fetch('//raw.githubusercontent.com/telegeography/www.submarinecablemap.com/master/web/public/api/v3/cable/cable-geo.json')
+          .then(r =>r.json())
+          .then(cablesGeo => {
+            let cablePaths = [];
+            cablesGeo.features.forEach(({ geometry, properties }) => {
+              geometry.coordinates.forEach(coords => cablePaths.push({ coords, properties }));
+            });
+
+            setCablePaths(cablePaths);
           });
+      }, []);
 
-          setCablePaths(cablePaths);
-        });
-    }, []);
+      return <Globe
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+        pathsData={cablePaths}
+        pathPoints="coords"
+        pathPointLat={p => p[1]}
+        pathPointLng={p => p[0]}
+        pathColor={path => path.properties.color}
+        pathLabel={path => path.properties.name}
+        pathDashLength={0.1}
+        pathDashGap={0.008}
+        pathDashAnimateTime={12000}
+      />;
+    };
 
-    return <Globe
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
-      bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-      backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      pathsData={cablePaths}
-      pathPoints="coords"
-      pathPointLat={p => p[1]}
-      pathPointLng={p => p[0]}
-      pathColor={path => path.properties.color}
-      pathLabel={path => path.properties.name}
-      pathDashLength={0.1}
-      pathDashGap={0.008}
-      pathDashAnimateTime={12000}
-    />;
-  };
-
-  ReactDOM.render(
-    <World />,
-    document.getElementById('globeViz')
-  );
-</script>
+    ReactDOM.render(
+      <World />,
+      document.getElementById('globeViz')
+    );
+  </script>
 </body>

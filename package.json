@@ -1,16 +1,16 @@
 {
-  "name": "react-globe.gl",
+  "name": "react-globe.gl-fork",
   "version": "2.22.4",
   "description": "React component for Globe Data Visualization using ThreeJS/WebGL",
   "license": "MIT",
-  "unpkg": "dist/react-globe.gl.min.js",
-  "main": "dist/react-globe.gl.common.js",
-  "module": "dist/react-globe.gl.module.js",
-  "types": "dist/react-globe.gl.d.ts",
+  "unpkg": "dist/react-globe.gl-fork.min.js",
+  "main": "dist/react-globe.gl-fork.common.js",
+  "module": "dist/react-globe.gl-fork.module.js",
+  "types": "dist/react-globe.gl-fork.d.ts",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vasturiano/react-globe.gl.git"
+    "url": "git+https://github.com/vasturiano/react-globe.gl-fork.git"
   },
   "keywords": [
     "react",
@@ -27,9 +27,9 @@
     "url": "https://bl.ocks.org/vasturiano"
   },
   "bugs": {
-    "url": "https://github.com/vasturiano/react-globe.gl/issues"
+    "url": "https://github.com/vasturiano/react-globe.gl-fork/issues"
   },
-  "homepage": "https://github.com/vasturiano/react-globe.gl",
+  "homepage": "https://github.com/vasturiano/react-globe.gl-fork",
   "scripts": {
     "build": "rimraf dist && rollup -c",
     "dev": "rollup -w -c rollup.config.dev.js",
@@ -39,7 +39,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "globe.gl": "^2.26",
+    "globe.gl-fork": "^2.26",
     "prop-types": "^15.8",
     "react-kapsule": "^2.2"
   },
