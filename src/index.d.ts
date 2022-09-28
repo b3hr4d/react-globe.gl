@@ -3,7 +3,14 @@ import {
   GlobeInstance as GlobeKapsuleInstance,
 } from "globe.gl-fork"
 import * as React from "react"
-import { Camera, Material, Object3D, Scene, WebGLRenderer } from "three"
+import {
+  Camera,
+  Intersection,
+  Material,
+  Object3D,
+  Scene,
+  WebGLRenderer,
+} from "three"
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
 
 type Accessor<In, Out> = Out | string | ((obj: In) => Out)
@@ -73,15 +80,19 @@ export interface GlobeProps extends ConfigOptions {
   pathLabel?: ObjAccessor<string>
   onPathClick?: (
     path: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
   onPathRightClick?: (
     path: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
-  onPathHover?: (path: object | null, prevPath: object | null) => void
+  onPathHover?: (
+    path: object | null,
+    intersection: Intersection,
+    prevPath: object | null
+  ) => void
 
   // Labels layer
   labelsData?: object[]
@@ -101,15 +112,19 @@ export interface GlobeProps extends ConfigOptions {
   labelLabel?: ObjAccessor<string>
   onLabelClick?: (
     label: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
   onLabelRightClick?: (
     label: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
-  onLabelHover?: (label: object | null, prevLabel: object | null) => void
+  onLabelHover?: (
+    label: object | null,
+    intersection: Intersection,
+    prevLabel: object | null
+  ) => void
 
   // HTML Elements layer
   htmlElementsData?: object[]
@@ -128,15 +143,19 @@ export interface GlobeProps extends ConfigOptions {
   objectLabel?: ObjAccessor<string>
   onObjectClick?: (
     obj: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
   onObjectRightClick?: (
     obj: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
-  onObjectHover?: (obj: object | null, prevObj: object | null) => void
+  onObjectHover?: (
+    obj: object | null,
+    intersection: Intersection,
+    prevObj: object | null
+  ) => void
 
   // Custom layer
   customLayerData?: object[]
@@ -145,15 +164,19 @@ export interface GlobeProps extends ConfigOptions {
   customLayerLabel?: ObjAccessor<string>
   onCustomLayerClick?: (
     obj: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
   onCustomLayerRightClick?: (
     obj: object,
-    event: MouseEvent,
-    coords: { lat: number; lng: number; altitude: number }
+    intersection: Intersection,
+    event: MouseEvent
   ) => void
-  onCustomLayerHover?: (obj: object | null, prevObj: object | null) => void
+  onCustomLayerHover?: (
+    obj: object | null,
+    intersection: Intersection,
+    prevObj: object | null
+  ) => void
 
   // Render control
   enablePointerInteraction?: boolean
